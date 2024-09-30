@@ -5,7 +5,7 @@ const apiClient = axios.create({
     baseURL: "http://localhost:5000",
 });
 
-// GET
+// GET.
 export const fetchData = async () => {
     try {
         const response = await apiClient.get('/');
