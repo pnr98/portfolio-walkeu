@@ -1,9 +1,9 @@
-const Main = () => {
+const MyPage = () => {
     return (
         <div>
-            Main
+            MyPage
         </div>
     );
 };
 
-export default Main;
+export default MyPage;

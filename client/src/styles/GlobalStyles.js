@@ -1,6 +1,19 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
+    :root {
+        --pink:#F4E5F9;
+        --shadow:#fdd9ff;
+
+        --blue:#E0E8F7;
+
+        --yellow:#FFF8FB;
+        --white: #ffffff;
+
+        --black-20:#444444;
+        --border:#ECECEC;
+    }
+    
     * {
         margin: 0;
         padding: 0;
