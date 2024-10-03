@@ -1,9 +1,9 @@
-const Main = () => {
+const Signup = () => {
     return (
         <div>
-            Main
+            Signup
         </div>
     );
 };
 
-export default Main;
+export default Signup;
