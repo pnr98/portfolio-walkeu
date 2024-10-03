@@ -7,7 +7,7 @@ import React from "react";
 const Container = styled.div`
     position: absolute;
     z-index: 1;
-    margin-top: 15px;
+    margin-top: 30px;
     border: 1.5px solid var(--border);
     /* box-shadow: 0 0 0 2px var(--border) inset; */
     border-radius: 15px;

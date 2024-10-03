@@ -23,11 +23,12 @@ const AppConatiner = styled.div`
 const MainContainer = styled.div`
   /* flex: 1; */
   display: flex;
-  background-color: wheat;
+  background-color: var(--white);
   border-radius: 40px;
   width: 900px;
-  display: flex;
   justify-content: center;
+
+  box-shadow: 10px 10px 20px var(--shadow-10);
 `
 
 function App() {

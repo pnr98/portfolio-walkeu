@@ -16,11 +16,12 @@ const StyledButton = styled.button`
     // active
     ${(props) => props.isActive && css`
         background: var(--black-20);
-        box-shadow: 0px 0px 20px 1px var(--shadow); 
+        box-shadow: 0px 0px 20px 1px var(--pink-20); 
         z-index: 2;
+        color: var(--pink-20);
         &:hover {
             background: var(--black-20);
-            box-shadow: 0px 0px 20px 1px var(--shadow);   
+            box-shadow: 0px 0px 20px 1px var(--pink-20);   
         }
     `}
 `
@@ -43,7 +44,6 @@ const VARIANT = {
     navBtn: css`
         background: var(--white);
         border-radius: 15px;
-        color: black;
         padding: 12px 16px;
         /* &:hover {
             background: var(--pink);
