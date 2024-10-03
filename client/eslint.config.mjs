@@ -19,6 +19,7 @@ export default [
       "plugin:react-hooks/recommended", // React Hooks 권장 규칙
       "plugin:prettier/recommended", // Prettier 통합
       "airbnb-base",
+      "prettier" 
     ],
     parserOptions: {
       ecmaFeatures: {
