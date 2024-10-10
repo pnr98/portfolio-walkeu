@@ -1,53 +1,42 @@
 import { Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import Walk from "./pages/Walk";
-import Header from "./components/Header";
-import Nav from "./components/Nav";
-import styled from "styled-components";
 import Calender from "./pages/Calender";
-import Login from "./pages/Login";
-import MyPage from "./pages/MyPage";
-import Signup from "./pages/Signup";
-
-const AppConatiner = styled.div`
-  width: 100%;
-  height: 100vh;
-  padding: 15px;
-  display: flex;
-  gap: 15px;
-  background-color: #f2f2f2;
-
-  justify-content: center;
-  position: relative; // nav z-index 설정을 위해
-`
-const MainContainer = styled.div`
-  /* flex: 1; */
-  display: flex;
-  background-color: var(--white);
-  border-radius: 40px;
-  width: 900px;
-  justify-content: center;
-
-  box-shadow: 10px 10px 20px var(--shadow-10);
-`
+import Login from "./pages/auth/Login";
+import MyPage from "./pages/user/MyPage";
+import MyPuppy from "./pages/user/MyPuppy";
+import Register from "./pages/auth/Register";
+import Layout from "./components/layout/Layout";
+import CheckAuth from "./components/common/check-auth";
 
 function App() {
-  return (
-    <AppConatiner>
-      <Nav />
-      <MainContainer>
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/walk" element={<Walk />} />
-          <Route path="/calender" element={<Calender />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/signup" element={<Signup />} />
-        </Routes>
-      </MainContainer>
-      <Header />
-    </AppConatiner>
-  );
+	const isAuthenticated = false;
+	const user = null;
+
+	return (
+		<Layout>
+			<Routes>
+				<Route path="/" element={<Main />} />
+				{/* <Route
+					path="/auth"
+					element={
+						// <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+						<AuthLayout />
+						// </CheckAuth>
+					}
+				> */}
+				<Route path="login" element={<Login />} />
+				<Route path="register" element={<Register />} />
+				{/* </Route> */}
+				<Route element={<CheckAuth isAuthenticated={isAuthenticated} user={user} />}>
+					<Route path="/mypage" element={<MyPage />} />
+					<Route path="/mypuppy" element={<MyPuppy />} />
+					<Route path="/calender" element={<Calender />} />
+				</Route>
+				<Route path="/walk" element={<Walk />} />
+			</Routes>
+		</Layout>
+	);
 }
 
 export default App;

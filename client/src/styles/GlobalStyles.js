@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 
 const GlobalStyles = createGlobalStyle`
@@ -42,6 +42,10 @@ const GlobalStyles = createGlobalStyle`
         color: inherit;
         background: transparent;
     }
+    input {
+        all: unset; 
+        
+    }
 
     @font-face {
     font-family: 'Pretendard-Regular';
@@ -54,6 +58,6 @@ const GlobalStyles = createGlobalStyle`
         src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
     }
 
-`
+`;
 
 export default GlobalStyles;
