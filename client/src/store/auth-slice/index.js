@@ -1,12 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import apiClient from "../../api/apiService";
 
 const initialState = {
 	isAuthenticated: false,
 	isLoading: false,
-	user: null,
+	user: {
+		nickname: null,
+		email: null,
+		role: null,
+	},
 	isLoggedIn: false,
-	token: null,
 };
 //rejectWithValue : 서버에서 보낸 에러 메시지를 반환
 // 비동기 처리할 때 사용. 액션
@@ -16,36 +19,36 @@ export const registerUser = createAsyncThunk(
 	"/auth/register",
 	// 처리할 비동기 함수
 	async (formData) => {
-		const response = await axios.post("http://localhost:5000/auth/register", formData, {
-			withCredentials: true,
-		});
+		const response = await apiClient.post("/auth/register", formData, {});
 		return response.data;
 	}
 );
 export const loginUser = createAsyncThunk("/auth/login", async (formData, { rejectWithValue }) => {
 	try {
-		const response = await axios.post("http://localhost:5000/auth/login", formData, {
-			withCredentials: true,
-		});
+		const response = await apiClient.post("/auth/login", formData, {});
 		return response.data;
 	} catch (error) {
 		return rejectWithValue(error.response.data);
 	}
 });
-export const logoutUser = createAsyncThunk("/auth/logout", async () => {
-	const response = await axios.post(
-		"http://localhost:5000/auth/logout",
-		{
-			withCredentials: true,
-		}
-	);
-	return response.data;
+export const logoutUser = createAsyncThunk("/auth/logout", async (_, { rejectWithValue }) => {
+	try {
+		const response = await apiClient.post("/auth/logout", null, {});
+		localStorage.removeItem("accessToken");
+		return response.data;
+	} catch (error) {
+		return rejectWithValue(error.response.data);
+	}
 });
-export const checkAuth = createAsyncThunk("/auth/checkAuth", async () => {
-	const response = await axios.get("http://localhost:5000/auth/checkAuth", {
-		withCredentials: true,
-	});
-	return response.data;
+// 앱이 처음 로드될 때 사용자의 로그인 상태 확인
+// API 요청 전에 토큰을 확인하고, 리프레시 토큰이 만료되면 로그인 페이지로 이동.
+export const checkAuth = createAsyncThunk("/auth/checkAuth", async (_, { rejectWithValue }) => {
+	try {
+		const response = await apiClient.get("/auth/checkAuth");
+		return response.data; // user 정보
+	} catch (error) {
+		return rejectWithValue(error.response.data);
+	}
 });
 
 // api호출과같은 비동기 로직을 간단하고 효율적으로 관리할 수 있게 도움
@@ -53,29 +56,16 @@ export const checkAuth = createAsyncThunk("/auth/checkAuth", async () => {
 const authSlice = createSlice({
 	name: "auth",
 	initialState,
+	// 비동기 작업이 필요하지 않을 때, 즉 상태를 직접 변경하고 싶을 때 호출
 	reducers: {
-		setUser: (state, action) => {
-			state.user = action.payload.user;
-			state.token = action.payload.token;
-		},
-		login(state, action) {
-			state.user = action.payload.user;
-			state.token = action.payload.token;
-			localStorage.setItem("token", action.payload.token);
-		},
-		logout(state) {
+		logout: (state) => {
+			state.isAuthenticated = false;
+			state.isLoading = false;
 			state.user = null;
+			state.isLoggedIn = false;
 			state.token = null;
-			localStorage.removeItem("token");
 		},
-		loadUser(state) {
-			const token = localStorage.getItem("token");
-			if (token) {
-				state.token = token;
-
-				// 필요한 경우 추가 사용자 정보를 저장하는 로직 추가
-			}
-		},
+		setUser: (state, action) => {},
 	},
 	// action의 peding, fulfilled, rejected 상태에 대한 처리 결과를 넣을 수 있음
 	extraReducers: (builder) => {
@@ -90,7 +80,7 @@ const authSlice = createSlice({
 				state.isAuthenticated = false;
 			})
 			.addCase(registerUser.rejected, (state, action) => {
-				state.isLoading = true;
+				state.isLoading = false;
 			})
 			// 로그인
 			.addCase(loginUser.pending, (state) => {
@@ -100,28 +90,37 @@ const authSlice = createSlice({
 				state.isLoading = false;
 				state.isLoggedIn = true;
 				state.user = action.payload.user;
-				state.token = action.payload.token;
 				state.isAuthenticated = true;
 			})
 			.addCase(loginUser.rejected, (state) => {
-				state.isLoading = true;
+				state.isLoading = false;
 			})
 			// 로그아웃
 			.addCase(logoutUser.pending, (state) => {
 				state.isLoading = true;
 			})
-			.addCase(logoutUser.fulfilled, (state, action) => {
+			.addCase(logoutUser.fulfilled, (state) => {
 				state.isLoading = false;
 				state.user = null;
-				state.token = null;
 				state.isAuthenticated = false;
 				state.isLoggedIn = false;
 			})
-			.addCase(logoutUser.rejected, (state, action) => {
-				state.isLoading = true;
+			.addCase(logoutUser.rejected, (state) => {
+				state.isLoading = false;
+			})
+			// 사용자 인증 검증
+			.addCase(checkAuth.fulfilled, (state, action) => {
+				state.isAuthenticated = true;
+				state.isLoggedIn = true;
+				state.user = action.payload.user;
+			})
+			.addCase(checkAuth.rejected, (state) => {
+				state.isAuthenticated = false;
+				state.isLoggedIn = false;
+				state.user = null;
 			});
 	},
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, logout } = authSlice.actions;
 export default authSlice.reducer;

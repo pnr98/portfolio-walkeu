@@ -93,7 +93,7 @@ const Login = () => {
 				const response = await dispatch(loginUser(newFormData));
 				if (loginUser.fulfilled.match(response)) {
 					console.log("로그인 성공. token: ", response.payload);
-					localStorage.setItem("accessToken", response.payload.token);
+					localStorage.setItem("accessToken", response.payload.accessToken);
 					navigate("/walk");
 				} else if (loginUser.rejected.match(response)) {
 					console.log(response);
