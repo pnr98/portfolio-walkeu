@@ -39,13 +39,13 @@ apiClient.interceptors.response.use(
 	async (error) => {
 		const originalRequest = error.config;
 		// 리프레시 토큰 없을 때 + 액세스 토큰 유무는 상관없음 --> 무조건 로그아웃
-		if (error.response.status === 403 && !originalRequest._retry) {
+		if (error.response?.status === 403 && !originalRequest._retry) {
 			console.error("리프레시 토큰이 만료되었습니다.", error);
 			handleLogout();
 			return Promise.reject(error);
 		}
 		// 401 에러 = 액세스 토큰 없음 --> 재발급 요청
-		if (error.response.status === 401 && !originalRequest._retry) {
+		if (error.response?.status === 401 && !originalRequest._retry) {
 			//_retry: 해당 요청이 이미 재시도 되었는지 확인. 처음 오류가 발생했을 때 undefined 또는 false.
 			// 응답 인터셉터 내에서 자동 토큰 갱신 로직을 처리할 때, 무한 재시도 루프에 빠지는 것을 방지
 			originalRequest._retry = true;
@@ -61,7 +61,7 @@ apiClient.interceptors.response.use(
 				return apiClient(originalRequest);
 			} catch (error) {
 				//  403 에러 = 리프레시 토큰은 없지만 액세스 토큰은 있을때
-				if (error.response.status === 403) {
+				if (error.response?.status === 403) {
 					console.error("리프레시 토큰이 만료되었습니다.", error);
 					handleLogout();
 					return Promise.reject(error);

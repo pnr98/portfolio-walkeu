@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import Walk from "./pages/Walk";
-import Calender from "./pages/Calender";
+import MyCalender from "./pages/MyCalender";
 import Login from "./pages/auth/Login";
 import MyPage from "./pages/user/MyPage";
 import MyPuppy from "./pages/user/MyPuppy";
@@ -24,12 +24,13 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Main />} />
 				<Route path="/walk" element={<Walk />} />
+
 				<Route element={<ProtectedRoute />}>
+					<Route path="/calender" element={<MyCalender />} />
 					<Route path="login" element={<Login />} />
 					<Route path="register" element={<Register />} />
 					<Route path="/mypage" element={<MyPage />} />
 					<Route path="/mypuppy" element={<MyPuppy />} />
-					<Route path="/calender" element={<Calender />} />
 				</Route>
 			</Routes>
 		</Layout>

@@ -44,7 +44,7 @@ export const logoutUser = createAsyncThunk("/auth/logout", async (_, { rejectWit
 // API 요청 전에 토큰을 확인하고, 리프레시 토큰이 만료되면 로그인 페이지로 이동.
 export const checkAuth = createAsyncThunk("/auth/checkAuth", async (_, { rejectWithValue }) => {
 	try {
-		const response = await apiClient.get("/auth/checkAuth");
+		const response = await apiClient.get("/auth/check-auth");
 		return response.data; // user 정보
 	} catch (error) {
 		return rejectWithValue(error.response.data);

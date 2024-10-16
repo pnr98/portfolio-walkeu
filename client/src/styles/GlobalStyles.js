@@ -11,7 +11,11 @@ const GlobalStyles = createGlobalStyle`
         --yellow:#FFF8FB;
         --white: #ffffff;
         --black-20:#444444;
+        --black-10:#b0b0b0;
         --border:#ECECEC;
+
+        --grey-10: #f7f7f7;
+        --grey-20: #e7e7e7;
     }
 
     * {

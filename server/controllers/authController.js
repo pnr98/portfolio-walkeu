@@ -81,8 +81,7 @@ exports.login = async (req, res) => {
 // 액세스 토큰은 보통 짧은 유효 기간을 가지며, 로그아웃 요청이 들어올 때마다 사용하기에는 번거롭고 비효율적
 // 액세스 토큰은 사용자가 API에 요청을 할 때마다 사용
 exports.logout = async (req, res) => {
-  const authHeader = req.headers.authorization;
-  const accessToken = authHeader?.split(" ")[1];
+  const accessToken = req.headers.authorization?.split(" ")[1];
   if (!accessToken) {
     return res.status(401).json({ message: "액세스 토큰이 필요합니다." });
   }
@@ -98,8 +97,7 @@ exports.logout = async (req, res) => {
 
 // checkAuth / GET
 exports.checkAuth = async (req, res) => {
-  const authHeader = req.headers.authorization;
-  const accessToken = authHeader?.split(" ")[1];
+  const accessToken = req.headers.authorization?.split(" ")[1];
   if (!accessToken) {
     console.log("4"); // 이게 실행됨
     return res.status(401).json({ message: "액세스 토큰이 없습니다" });

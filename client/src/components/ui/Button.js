@@ -31,6 +31,7 @@ const SIZES = {
 	sm: css`
 		font-size: 14px;
 		font-weight: 500;
+		padding: 8px 10px;
 	`,
 	md: css`
 		font-size: 16px;
@@ -72,6 +73,24 @@ const VARIANT = {
 					color: var(--black-20);
 				}
 			`}
+	`,
+	confirmBtn: css`
+		border: none;
+		background: var(--pink-10);
+		border-radius: 15px;
+		padding: 12px 16px;
+		&:hover {
+			background: var(--pink-20);
+		}
+	`,
+	cancleBtn: css`
+		border: none;
+		background: var(--pink-10);
+		border-radius: 15px;
+		padding: 12px 16px;
+		&:hover {
+			background: var(--pink-20);
+		}
 	`,
 };
 
