@@ -21,6 +21,7 @@ const CalenderContainer = styled.div`
 	padding: 30px;
 	font-size: 20px;
 	position: relative;
+	margin-top: 20px;
 `;
 const CalenderHeader = styled.div`
 	display: flex;
@@ -67,7 +68,7 @@ const Day = styled.div`
 	}
 
 	&.walked {
-		background-color: var(--pink-10);
+		background-color: var(--purple);
 	}
 `;
 const Calender = () => {

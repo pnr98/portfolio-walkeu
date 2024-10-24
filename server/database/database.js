@@ -1,18 +1,5 @@
 const mysql = require("mysql2/promise");
 
-// const db = mysql.createConnection({
-//   user: "pnr98",
-//   host: "127.0.0.1",
-//   database: "walkeu_db",
-//   password: "as9950as",
-// });
-
-// // db.connect((err) => {
-// //   if (err) throw err;
-// //   console.log("db연결 성공!");
-// // });
-// module.exports = db//.promise(); // promise로 반환해야 promise를 사용할 수있음.
-
 const db = mysql.createPool({
   user: "pnr98",
   host: "127.0.0.1",

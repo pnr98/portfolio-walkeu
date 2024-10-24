@@ -1,5 +1,4 @@
 import axios from "axios";
-import { handleLogout } from "../utils/handleLogout";
 
 // 기본 axios 인스턴스 생성
 const apiClient = axios.create({
@@ -41,7 +40,7 @@ apiClient.interceptors.response.use(
 		// 리프레시 토큰 없을 때 + 액세스 토큰 유무는 상관없음 --> 무조건 로그아웃
 		if (error.response?.status === 403 && !originalRequest._retry) {
 			console.error("리프레시 토큰이 만료되었습니다.", error);
-			handleLogout();
+			localStorage.removeItem("accessToken");
 			return Promise.reject(error);
 		}
 		// 401 에러 = 액세스 토큰 없음 --> 재발급 요청
@@ -63,7 +62,7 @@ apiClient.interceptors.response.use(
 				//  403 에러 = 리프레시 토큰은 없지만 액세스 토큰은 있을때
 				if (error.response?.status === 403) {
 					console.error("리프레시 토큰이 만료되었습니다.", error);
-					handleLogout();
+					localStorage.removeItem("accessToken");
 					return Promise.reject(error);
 				}
 			}

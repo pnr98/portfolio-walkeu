@@ -6,8 +6,10 @@ import Button from "../ui/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../store/auth-slice";
+import { useState } from "react";
+import Modal from "../ui/Modal";
 
-const Container = styled.div`
+const HeaderContainer = styled.div`
 	background-color: var(--white);
 	border-radius: 40px;
 	height: 100%;
@@ -18,13 +20,11 @@ const Container = styled.div`
 	justify-content: center;
 `;
 
-const StyledIcon = styled.div`
+const IconContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	/* justify-content: space-between; */
-
-	/* align-items: center;
-    align-content: center; */
+	justify-content: space-between;
+	margin: 30px 0px;
 	svg {
 		color: var(--black-20);
 		font-size: 30px;
@@ -45,32 +45,45 @@ const Header = () => {
 			} else {
 				console.log("로그아웃 실패:", response.payload.message);
 			}
+			setModalOpen(false);
 		} catch (error) {
 			console.error("로그아웃 중 오류 발생:", error);
 		}
 	};
+	const [modalOpen, setModalOpen] = useState(false);
+	const [modalContent, setModalContent] = useState("");
 
+	const openModal = () => {
+		setModalOpen(true);
+		if (isLoggedIn) {
+			setModalContent("로그아웃 하시겠습니까?");
+		}
+	};
+	const closeModal = () => {
+		setModalOpen(false);
+	};
 	return (
-		<Container>
+		<HeaderContainer>
+			<Modal isOpen={modalOpen} onClose={closeModal} modalContent={modalContent} handleClick={handleLogout} />
 			{isLoggedIn ? (
-				<StyledIcon>
+				<IconContainer>
 					<Button>
-						<RxHamburgerMenu className="icon" />
+						<RxHamburgerMenu className="icon-hamburger" />
 					</Button>
-					<Button onClick={handleLogout}>
-						<FiLogOut className="icon" />
+					<Button onClick={openModal}>
+						<FiLogOut className="icon-logout" />
 					</Button>
-				</StyledIcon>
+				</IconContainer>
 			) : (
-				<StyledIcon>
+				<IconContainer>
 					<Link to="login">
 						<Button>
-							<FiLogIn className="icon" />
+							<FiLogIn className="icon-login" />
 						</Button>
 					</Link>
-				</StyledIcon>
+				</IconContainer>
 			)}
-		</Container>
+		</HeaderContainer>
 	);
 };
 

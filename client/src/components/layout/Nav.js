@@ -5,7 +5,7 @@ import React from "react";
 
 const Container = styled.div`
 	position: absolute;
-	z-index: 1;
+	z-index: 50;
 	margin-top: 30px;
 	border: 1.5px solid var(--border);
 	/* box-shadow: 0 0 0 2px var(--border) inset; */
@@ -25,8 +25,8 @@ const Icon = styled.img`
 
 const navItems = [
 	{ label: "홈!!", path: "/" },
-	{ label: "산책해요", path: "/walk" },
-	{ label: "산책했어요", path: "/calender" },
+	{ label: "산책해요", path: "/forecast" },
+	{ label: "산책했어요", path: "/calendar" },
 	{ label: "게시판", path: "/board" },
 ];
 

@@ -94,7 +94,7 @@ const Login = () => {
 				if (loginUser.fulfilled.match(response)) {
 					console.log("로그인 성공. token: ", response.payload);
 					localStorage.setItem("accessToken", response.payload.accessToken);
-					navigate("/walk");
+					navigate("/");
 				} else if (loginUser.rejected.match(response)) {
 					console.log(response);
 					const { message } = response.payload;

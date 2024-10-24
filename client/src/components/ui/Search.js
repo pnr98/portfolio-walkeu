@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import Button from "./Button";
-import styled from "styled-components";
+import { useState, useEffect } from "react";
+import { styled } from "styled-components";
+import Input from "../ui/Input";
 
-const ModalContainer = styled.div`
+const SearchContainer = styled.div`
 	background-color: rgba(0, 0, 0, 0.2);
 	position: fixed;
 	top: 0;
@@ -12,11 +12,10 @@ const ModalContainer = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 	z-index: 100;
 `;
 
-const ModalWrapper = styled.div`
+const SearchWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -33,7 +32,8 @@ const ModalWrapper = styled.div`
 		gap: 10px;
 	}
 `;
-const Modal = ({ isOpen, onClose, modalContent, handleClick }) => {
+// 사용자 위치에 따른 지역 이름을 보여줌
+const Search = ({ isOpen, onClose, modalContent, handleClick }) => {
 	const [modalVisible, setModalvisible] = useState(isOpen);
 	// 모달 닫기
 	const closeModal = () => {
@@ -45,28 +45,38 @@ const Modal = ({ isOpen, onClose, modalContent, handleClick }) => {
 		setModalvisible(isOpen);
 	}, [isOpen]);
 
+	const [inputValue, setInputValue] = useState("");
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setInputValue({
+			...inputValue,
+			[name]: value,
+		});
+	};
+
 	return (
 		<>
 			{modalVisible && (
 				// 모달 바깥을 클릭하면 닫힘
-				<ModalContainer onClick={closeModal}>
+				<SearchContainer onClick={closeModal}>
 					<div onClick={(e) => e.stopPropagation()}>
-						<ModalWrapper>
-							<div>{modalContent}</div>
-							<div className="btn-container">
-								<Button onClick={closeModal} size="md" variant="cancleBtn">
-									취소
-								</Button>
-								<Button onClick={handleClick} size="md" variant="confirmBtn">
-									확인
-								</Button>
-							</div>
-						</ModalWrapper>
+						<SearchWrapper>
+							<Input
+								type="text"
+								name="search"
+								id="search"
+								value={inputValue.name}
+								onChange={handleChange}
+								placeholder="동네명을 입력해주세요"
+							/>
+
+							<div className="btn-container"></div>
+						</SearchWrapper>
 					</div>
-				</ModalContainer>
+				</SearchContainer>
 			)}
 		</>
 	);
 };
 
-export default Modal;
+export default Search;

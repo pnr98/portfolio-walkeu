@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv").config(); // 환경변수 사용
 const authRoutes = require("./routes/authRoutes");
 const walkRoutes = require("./routes/walkRoutes");
+const forecastRoutes = require("./routes/forecastRoutes");
 
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -22,6 +23,7 @@ app.use(cookieParser()); // for 토큰
 // routes
 app.use("/auth", authRoutes);
 app.use("/walks", walkRoutes);
+app.use("/forecast", forecastRoutes);
 
 // Middleware
 app.get("/", (req, res) => {
