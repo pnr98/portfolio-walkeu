@@ -16,12 +16,12 @@ const StyledButton = styled.button`
     ${(props) =>
 		props.isActive &&
 		css`
-			background: var(--black-20);
+			background: var(--black-30);
 			box-shadow: 0px 0px 20px 1px var(--pink-20);
 			z-index: 2;
 			color: var(--pink-20);
 			&:hover {
-				background: var(--black-20);
+				background: var(--black-30);
 				box-shadow: 0px 0px 20px 1px var(--pink-20);
 			}
 		`}
@@ -61,7 +61,7 @@ const VARIANT = {
 				&:hover {
 					border: 1px solid #ff416c;
 					background: var(--white);
-					color: var(--black-20);
+					color: var(--black-30);
 				}
 			`}
 		${(props) =>
@@ -70,7 +70,7 @@ const VARIANT = {
 				border: 1px solid var(--white);
 				&:hover {
 					background-color: var(--white);
-					color: var(--black-20);
+					color: var(--black-30);
 				}
 			`}
 	`,

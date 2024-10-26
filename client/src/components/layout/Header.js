@@ -26,7 +26,7 @@ const IconContainer = styled.div`
 	justify-content: space-between;
 	margin: 30px 0px;
 	svg {
-		color: var(--black-20);
+		color: var(--black-30);
 		font-size: 30px;
 	}
 `;

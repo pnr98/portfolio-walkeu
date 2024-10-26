@@ -53,14 +53,14 @@ const Day = styled.div`
 			? css`
 					background-color: var(--grey-20);
 					&:hover {
-						background: var(--black-20);
+						background: var(--black-30);
 					}
 				`
 			: css`
 					background-color: var(--grey-10);
 					color: var(--black-10);
 					&:hover {
-						background: var(--black-20);
+						background: var(--black-30);
 					}
 				`}
 	&:hover {

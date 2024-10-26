@@ -9,13 +9,13 @@ const GlobalStyles = createGlobalStyle`
         --shadow-10: #231f2014;
         --purple: #dcafff;
         --blue-10:#E0E8F7;
-        --blue-20:#E0E8F7;
-        --blue-30:#E0E8F7;
-        --blue-40:#E0E8F7;
+        --blue-20:#c8dbff;
+        --blue-30:#a2c2ff;
 
         --yellow:#FFF8FB;
         --white: #ffffff;
-        --black-20:#444444;
+        --black-30:#444444;
+        --black-20: #6c6c6c;
         --black-10:#b0b0b0;
         --border:#ECECEC;
 
@@ -26,6 +26,7 @@ const GlobalStyles = createGlobalStyle`
         --grade-orange: #fda60e;
         --grade-red: #cd3534;
 
+        --table-border: #c8dbff70;
         --box-shadow: 2px 20px 50px 0px rgba(145, 192, 255, 0.3),
 		inset -1px -1px 20px 0px rgba(145, 192, 255, 0.4),
 		inset 0px 11px 28px 0px rgb(255, 255, 255);
@@ -43,7 +44,7 @@ const GlobalStyles = createGlobalStyle`
         min-height : 100vh;
         width: 100vw;
         font-family: 'Pretendard-Regular', 'Noto Sans KR', 'Roboto', sans-serif;
-        color: var(--black-20);
+        color: var(--black-30);
         
     }
 

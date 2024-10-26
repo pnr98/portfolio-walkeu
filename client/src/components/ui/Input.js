@@ -8,7 +8,7 @@ const StyledInput = styled.input`
 	padding: 10px 20px;
 	transition: background-color 0.1s ease;
 	&:hover {
-		border-color: var(--black-20);
+		border-color: var(--black-30);
 	}
 	${(props) => props.variant && VARIANT[props.variant]};
 	${(props) =>
