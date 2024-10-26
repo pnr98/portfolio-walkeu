@@ -7,15 +7,27 @@ export const formatTime = (fcstTime) => {
 	} else if (hour > 12) {
 		return `오후 ${hour - 12}시`;
 	} else {
-		return `오전 ${hour}시`;
+		return `오후 ${hour}시`;
 	}
 };
+
+// 낮 밤 구분
+export const distinguishTime = (fcstTime) => {
+	const hour = Number(fcstTime.slice(0, 2));
+	// 5시~17시 낮
+	if (hour >= 5 && hour <= 17) {
+		return "daytime";
+	} else {
+		return "night";
+	}
+};
+
 // 하늘 상태
 export const formatSkyState = (fcstValue) => {
 	if (fcstValue === 1) {
 		return "맑음";
 	} else if (fcstValue === 2) {
-		return "구름보통";
+		return "구름조금";
 	} else if (fcstValue === 3) {
 		return "구름많음";
 	} else if (fcstValue === 4) {

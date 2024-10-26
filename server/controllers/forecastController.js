@@ -2,6 +2,7 @@ const {
   shortTermApi,
   nowWeatherApi,
   airQualityApi,
+  longWeatherApi,
 } = require("../utils/forecastApi");
 const { getRegionNameApi } = require("../utils/getRegionNameApi");
 const { handleWeather } = require("../utils/handleWeather");
@@ -50,7 +51,6 @@ exports.getShortTerm = async (req, res) => {
 
   try {
     const rawWeather = await shortTermApi(lat, lng);
-    console.log("shortTerm");
     const shortTermData = handleWeather(rawWeather); // 데이터 가공
     return res.status(200).json({ shortTermList: shortTermData });
   } catch (error) {
@@ -89,12 +89,12 @@ exports.getWeather = async (req, res) => {
       results.errors.push("초단기예보 데이터를 가져오지 못했습니다.");
     }
     // 단기예보
-    try {
-      const rawWeather = await longTermApi(lat, lng);
-      results.longTerm = handleWeather(rawWeather, "long");
-    } catch (error) {
-      results.errors.push("단기예보 데이터를 가져오지 못했습니다.");
-    }
+    // try {
+    //   const rawWeather = await longWeatherApi(lat, lng);
+    //   results.longTerm = handleWeather(rawWeather, "long");
+    // } catch (error) {
+    //   results.errors.push("단기예보 데이터를 가져오지 못했습니다.");
+    // }
     // 대기질. 실시간
     try {
       const rawWeather = await airQualityApi(addr);
@@ -103,11 +103,38 @@ exports.getWeather = async (req, res) => {
       results.errors.push("대기질 데이터를 가져오지 못했습니다.");
     }
     if (results.errors.length === 0) {
-      console.log("날씨 불러오기 전부 성공");
+      console.log("초단기 날씨 불러오기 전부 성공");
     }
 
     return res.status(200).json(results);
   } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "서버에서 데이터를 가져오는 도중 오류가 발생했습니다." });
+  }
+};
+
+exports.getLongWeather = async (req, res) => {
+  const { lat, lng } = req.query;
+  const results = {
+    longTerm: null,
+    errors: [],
+  };
+
+  if (!lat || !lng) {
+    return res.status(400).send("위도와 경도를 제공해야 합니다.");
+  }
+  try {
+    // 단기예보
+    const rawWeather = await longWeatherApi(lat, lng);
+    results.longTerm = handleWeather(rawWeather, "long");
+
+    if (results.errors.length === 0) {
+      console.log("단기 날씨 불러오기 전부 성공");
+    }
+    return res.status(200).json(results);
+  } catch (error) {
+    results.errors.push("단기예보 데이터를 가져오지 못했습니다.");
     return res
       .status(500)
       .json({ error: "서버에서 데이터를 가져오는 도중 오류가 발생했습니다." });

@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import {
+	distinguishTime,
 	formatAirQuality,
 	formatprecipitation,
 	formatPrepcipitationForm,
@@ -70,10 +71,6 @@ const CardContent = styled.div`
 	.grade-sky {
 		margin-bottom: 10px;
 	}
-
-	.value {
-		color: black;
-	}
 	.sky-icon {
 		width: 40px;
 	}
@@ -84,7 +81,7 @@ const WeatherCard = ({ weatherData }) => {
 
 	const renderContent = () => {
 		if (temperature) {
-			const { grade, text } = formatThermo(Number(temperature));
+			const { grade, text } = formatThermo(Number(temperature.obsrValue));
 			return (
 				<>
 					<Title>
@@ -94,12 +91,12 @@ const WeatherCard = ({ weatherData }) => {
 					</Title>
 					<CardContent grade={grade}>
 						<div className="grade">{text}</div>
-						<div className="value">{temperature}</div>
+						<div className="value">{temperature.obsrValue}</div>
 					</CardContent>
 				</>
 			);
 		} else if (windSpeed) {
-			const { grade, text } = formatWindSpeed(Number(windSpeed));
+			const { grade, text } = formatWindSpeed(Number(windSpeed.obsrValue));
 			return (
 				<>
 					<Title>
@@ -109,14 +106,16 @@ const WeatherCard = ({ weatherData }) => {
 					</Title>
 					<CardContent grade={grade}>
 						<div className="grade">{text}</div>
-						<div className="value">{windSpeed}</div>
+						<div className="value">{windSpeed.obsrValue}</div>
 					</CardContent>
 				</>
 			);
 		} else if (precipitationForm) {
-			const form = formatPrepcipitationForm(Number(precipitationForm));
-			const prcp = formatprecipitation(Number(precipitation));
+			const form = formatPrepcipitationForm(Number(precipitationForm.obsrValue));
+			const prcp = formatprecipitation(Number(precipitation.obsrValue));
 			const nowSkyState = formatSkyState(Number(skyState[0]?.fcstValue));
+			const fcstTime = distinguishTime(precipitationForm.baseTime);
+
 			return (
 				<>
 					<Title>
@@ -125,7 +124,7 @@ const WeatherCard = ({ weatherData }) => {
 					</Title>
 					<CardContent>
 						<div className="grade-sky">
-							<img className="sky-icon" src={getImageByForm(form, nowSkyState)} />
+							<img className="sky-icon" src={getImageByForm(form, nowSkyState, fcstTime)} />
 						</div>
 						<div className="value">{form !== "없음" ? prcp : nowSkyState}</div>
 					</CardContent>
@@ -138,6 +137,7 @@ const WeatherCard = ({ weatherData }) => {
 					<Title>
 						<img src={require("../../assets/weather-icon/dust.png")} />
 						대기질
+						<span className="small-text">CAI</span>
 					</Title>
 					<CardContent grade={grade}>
 						<div className="grade">{text}</div>
