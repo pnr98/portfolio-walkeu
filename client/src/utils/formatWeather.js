@@ -6,8 +6,10 @@ export const formatTime = (fcstTime) => {
 		return "오전 12시";
 	} else if (hour > 12) {
 		return `오후 ${hour - 12}시`;
+	} else if (hour === 12) {
+		return `오후 12시`;
 	} else {
-		return `오후 ${hour}시`;
+		return `오전 ${hour}시`;
 	}
 };
 
@@ -53,23 +55,36 @@ export const formatPrepcipitationForm = (fcstValue) => {
 	// 	return "눈날림";
 	// }
 };
-// 강수량
-export const formatprecipitation = (fcstValue) => {
-	if (fcstValue === "강수없음" || fcstValue === 0) {
-		return "강수없음";
-	} else if (fcstValue < 1.0) {
-		return "1.0mm 미만";
-	} else if (fcstValue >= 1.0 && fcstValue < 50.0) {
-		return `${fcstValue}mm`;
-	} else if (fcstValue >= 50.0) {
-		return "50mm 이상";
+// 강수량 // 쓸일 없음
+export const formatprecipitation = (fcstValue, code) => {
+	if (code === 0) {
+		// 초단기예보
+		if (fcstValue === "강수없음" || fcstValue === 0) {
+			return "0";
+		} else if (fcstValue === "1mm 미만") {
+			return "1mm 미만";
+		} else if (fcstValue === "30.0~50.0mm") {
+			return "30.0~50.0mm";
+		} else if (fcstValue === "50mm 이상") {
+			return "50mm 이상";
+		} else {
+			const numFcstValue = fcstValue.replace("mm", "");
+			return numFcstValue;
+		}
+	} else if (code === 1) {
+		// 초단기실황
+		if (fcstValue === "강수없음" || fcstValue === 0) {
+			return "0";
+		} else if (fcstValue === "1mm 미만") {
+			return "1mm 미만";
+		} else if (fcstValue > 1 && fcstValue < 30) {
+			return `${fcstValue}mm`;
+		} else if (fcstValue === "30.0~50.0mm") {
+			return "30.0~50.0mm";
+		} else if (fcstValue === "50mm 이상") {
+			return "50mm 이상";
+		}
 	}
-
-	// else if (fcstValue >= 1.0 && fcstValue < 30.0) {
-	// 	return "1.0~29.0mm";
-	// } else if (fcstValue >= 30.0 && fcstValue < 50.0) {
-	// 	return "30.0~50.0mm";
-	// }
 };
 // 초단기실황
 export const formatPrepcipitationFormForLong = (fcstValue) => {
@@ -113,11 +128,14 @@ export const formatThermo = (fcstValue) => {
 
 	if (fcstValue >= 27) {
 		text = "더움";
-		grade = 1;
+		grade = 2;
 	} else if (fcstValue >= 20 && fcstValue < 27) {
 		text = "포근";
+		grade = 1;
+	} else if (fcstValue >= 12 && fcstValue < 20) {
+		text = "약간 쌀쌀";
 		grade = 2;
-	} else if (fcstValue >= 7 && fcstValue < 20) {
+	} else if (fcstValue >= 7 && fcstValue < 12) {
 		text = "쌀쌀";
 		grade = 3;
 	} else if (fcstValue < 7) {

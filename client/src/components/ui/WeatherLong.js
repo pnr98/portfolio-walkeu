@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const TableContainer = styled.div``;
+const TableContainer = styled.div`
+	width: 100%;
+`;
 const Table = styled.table`
 	display: table;
 	width: 100%;

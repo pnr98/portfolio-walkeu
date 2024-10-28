@@ -11,7 +11,7 @@ import {
 import { getImageByForm } from "../../utils/getImageByForm";
 
 const TableConatiner = styled.div`
-	width: 700px;
+	width: 100%;
 	height: 380px;
 	display: flex;
 	align-items: center;
@@ -30,6 +30,8 @@ const Table = styled.table`
 	height: 100%;
 	border-collapse: collapse;
 	color: var(--black-20);
+	//
+	table-layout: fixed;
 	th {
 		font-weight: 600;
 		color: var(--black-20);
@@ -41,28 +43,23 @@ const TableBody = styled.tbody`
 	th,
 	td {
 		padding-top: 20px;
-	}
-
-	td {
-		vertical-align: middle;
 		text-align: center;
 	}
 	.category {
-		text-align: left;
+		.unit {
+			font-size: 12px;
+			color: var(--black-10);
+			font-weight: 500;
+		}
 	}
-	.unit {
-		text-align: left;
-		font-size: 12px;
-		color: var(--black-10);
-		font-weight: 500;
-	}
+
 	.sky-icon {
 		width: 35px;
 	}
 	.chart {
 		text-align: center;
 		height: 100%;
-		padding: 0px 35px;
+		padding: 30px 32px 0 32px;
 	}
 `;
 
@@ -93,7 +90,7 @@ const WeatherChart = ({ shortTerm }) => {
 	// 강수량
 	const precipitation = shortTerm.precipitation.map((item) => ({
 		time: item.fcstTime,
-		value: formatprecipitation(item.fcstValue === "강수없음" ? "강수없음" : Number(item.fcstValue)),
+		value: formatprecipitation(item.fcstValue, 0),
 	}));
 	// 강수 형태
 	const prcpForm = shortTerm.precipitationForm.map((item) => ({
@@ -131,7 +128,7 @@ const WeatherChart = ({ shortTerm }) => {
 						<th></th>
 						<td className="chart" colspan="6">
 							<ResponsiveContainer width="100%" height={100}>
-								<LineChart margin={{ top: 40, right: 14, left: 14, bottom: 10 }} data={temperature}>
+								<LineChart margin={{ top: 40, right: 15, left: 14, bottom: 10 }} data={temperature}>
 									<YAxis domain={[minY, maxY]} hide={true} />
 									<Line type="monotone" dataKey="value" stroke="#8884d8" strokeWidth={2} dot={{ r: 5 }}>
 										<LabelList dataKey="value" position="top" offset={20} formatter={(value) => `${value}°`} dx={3} />
@@ -142,8 +139,8 @@ const WeatherChart = ({ shortTerm }) => {
 					</tr>
 					<tr className="precipitation">
 						<th>
-							<div>
-								<div className="category">강수량</div>
+							<div className="category">
+								<div>강수량</div>
 								<div className="unit">(mm)</div>
 							</div>
 						</th>
@@ -155,8 +152,8 @@ const WeatherChart = ({ shortTerm }) => {
 					</tr>
 					<tr className="humidity">
 						<th>
-							<div>
-								<div className="category">습도</div>
+							<div className="category">
+								<div>습도</div>
 								<div className="unit">(%)</div>
 							</div>
 						</th>

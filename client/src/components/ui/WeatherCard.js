@@ -24,26 +24,31 @@ const CardContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
-
-	/* position: relative; */
 `;
 const Title = styled.div`
-	/* position: absolute;
-	top: 18px;
-	left: 18px; */
 	display: flex;
 	align-items: flex-end;
 
 	color: var(--black-10);
 	font-size: 18px;
+
 	img {
 		width: 20px;
 		filter: opacity(0.4);
-		margin-right: 8px;
+		margin-right: 4px;
 	}
 	.small-text {
 		font-size: 14px;
 		margin-left: 5px;
+		display: flex;
+		align-items: end;
+		img {
+			width: 16px;
+			margin-left: 2px;
+		}
+	}
+	.cai {
+		cursor: pointer;
 	}
 `;
 const CardContent = styled.div`
@@ -82,11 +87,12 @@ const WeatherCard = ({ weatherData }) => {
 	const renderContent = () => {
 		if (temperature) {
 			const { grade, text } = formatThermo(Number(temperature.obsrValue));
+
 			return (
 				<>
 					<Title>
 						<img src={require("../../assets/weather-icon/thermometer.png")} />
-						기온
+						<span>기온</span>
 						<span className="small-text">°C</span>
 					</Title>
 					<CardContent grade={grade}>
@@ -101,7 +107,7 @@ const WeatherCard = ({ weatherData }) => {
 				<>
 					<Title>
 						<img src={require("../../assets/weather-icon/wind.png")} />
-						바람
+						<span>바람</span>
 						<span className="small-text">m/s</span>
 					</Title>
 					<CardContent grade={grade}>
@@ -112,7 +118,7 @@ const WeatherCard = ({ weatherData }) => {
 			);
 		} else if (precipitationForm) {
 			const form = formatPrepcipitationForm(Number(precipitationForm.obsrValue));
-			const prcp = formatprecipitation(Number(precipitation.obsrValue));
+			const prcp = formatprecipitation(Number(precipitation.obsrValue), 1);
 			const nowSkyState = formatSkyState(Number(skyState[0]?.fcstValue));
 			const fcstTime = distinguishTime(precipitationForm.baseTime);
 
@@ -120,7 +126,7 @@ const WeatherCard = ({ weatherData }) => {
 				<>
 					<Title>
 						<img src={require("../../assets/weather-icon/sun.png")} />
-						날씨
+						<span>날씨</span>
 					</Title>
 					<CardContent>
 						<div className="grade-sky">
@@ -136,8 +142,11 @@ const WeatherCard = ({ weatherData }) => {
 				<>
 					<Title>
 						<img src={require("../../assets/weather-icon/dust.png")} />
-						대기질
-						<span className="small-text">CAI</span>
+						<span>대기질</span>
+						<span className="small-text cai">
+							CAI
+							<img src={require("../../assets/basic-icon/info.png")} />
+						</span>
 					</Title>
 					<CardContent grade={grade}>
 						<div className="grade">{text}</div>

@@ -10,12 +10,23 @@ const ForecastContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 50px;
+	width: 700px;
+
+	.measurement {
+		color: var(--black-10);
+		padding: 10px;
+	}
+`;
+const NowForecast = styled.div`
+	.card-container {
+		display: flex;
+		gap: 20px;
+	}
 `;
 
-const CardContainer = styled.div`
-	display: flex;
-	gap: 20px;
-`;
+const ShortForecast = styled.div``;
+
+const LongForecast = styled.div``;
 // 오래걸리는 작업 때문에 로딩상태를 따로 관리.
 const Forecast = () => {
 	const dispatch = useDispatch();
@@ -62,18 +73,39 @@ const Forecast = () => {
 	const { precipitation, precipitationForm, temperature, windSpeed } = nowWeather;
 	const { skyState } = shortTerm;
 
+	// 측정시간
+	const getMeasureTime = (data, code) => {
+		const baseDate = data?.baseDate;
+		const fcstDate = baseDate ? `${baseDate.slice(0, 4)}년 ${baseDate.slice(4, 6)}월 ${baseDate.slice(6, 8)}일` : null;
+
+		const baseTime = data?.baseTime;
+		let fcstTime = null;
+		if (code === 0) {
+			fcstTime = baseTime ? `${baseTime.slice(0, 2)}:45` : null;
+		} else if (code === 1) {
+			fcstTime = baseTime ? `${baseTime.slice(0, 2)}:10` : null;
+		}
+		return fcstDate && fcstTime ? `${fcstDate} ${fcstTime}` : null;
+	};
+
 	return (
 		<ForecastContainer>
 			<div>산책추천 시간?</div>
 			{!shortTermLoading ? (
 				<>
-					<CardContainer>
-						<WeatherCard weatherData={{ precipitationForm, precipitation, skyState }} />
-						<WeatherCard weatherData={{ temperature }} />
-						<WeatherCard weatherData={{ windSpeed }} />
-						<WeatherCard weatherData={{ airQuality }} />
-					</CardContainer>
-					<WeatherChart shortTerm={shortTerm} />
+					<NowForecast>
+						<div className="card-container">
+							<WeatherCard weatherData={{ precipitationForm, precipitation, skyState }} />
+							<WeatherCard weatherData={{ temperature }} />
+							<WeatherCard weatherData={{ windSpeed }} />
+							<WeatherCard weatherData={{ airQuality }} />
+						</div>
+						<div className="measurement">측정시간 : {getMeasureTime(temperature, 1)} </div>
+					</NowForecast>
+					<ShortForecast>
+						<WeatherChart shortTerm={shortTerm} />
+						<div className="measurement">측정시간 : {getMeasureTime(shortTerm.temperature[0], 0)} </div>
+					</ShortForecast>
 				</>
 			) : (
 				"데이터 불러오는 중..."
