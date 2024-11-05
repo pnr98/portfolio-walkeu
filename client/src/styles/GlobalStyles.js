@@ -45,7 +45,7 @@ const GlobalStyles = createGlobalStyle`
         width: 100vw;
         font-family: 'Pretendard-Regular', 'Noto Sans KR', 'Roboto', sans-serif;
         color: var(--black-30);
-        
+  
     }
 
     a {
@@ -64,7 +64,6 @@ const GlobalStyles = createGlobalStyle`
     }
     input {
         all: unset; 
-        
     }
 
     @font-face {
