@@ -24,10 +24,10 @@ const Icon = styled.img`
 `;
 
 const navItems = [
-	{ label: "홈!!", path: "/" },
-	{ label: "산책해요", path: "/forecast" },
-	{ label: "산책했어요", path: "/calendar" },
-	{ label: "게시판", path: "/board" },
+	{ name: "홈!!", path: "/" },
+	{ name: "산책해요", path: "/forecast" },
+	{ name: "산책했어요", path: "/calendar" },
+	{ name: "게시판", path: "/board" },
 ];
 
 const Nav = () => {
@@ -45,7 +45,7 @@ const Nav = () => {
 							onClick={() => navigate(item.path)}
 							isActive={location.pathname === item.path}
 						>
-							{item.label}
+							{item.name}
 						</Button>
 						{index < navItems.length - 1 && <Icon src={require("../../assets/nav.png")} alt="" />}
 					</React.Fragment>

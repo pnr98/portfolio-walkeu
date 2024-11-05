@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import Header from "./Header";
 import Nav from "./Nav";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const AppContainer = styled.div`
 	width: 100%;
@@ -30,29 +30,34 @@ const MainContainer = styled.div`
 
 	${(props) =>
 		props.withGradient &&
-		`
+		css`
 			&::before {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 0;
-		border-radius: 40px 40px 0px 0px;
-		width: 100%;
-		height: 100px; /* 그라데이션 높이 */
-		background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0));
-		z-index: 1;
-	}
-	&::after {
-		content: "";
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		border-radius: 0px 0px 40px 40px;
-		width: 100%;
-		height: 80px; /* 그라데이션 높이 */
-		background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
-		z-index: 1;
-	}
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				border-radius: 40px 40px 0px 0px;
+				width: 100%;
+				height: 100px; /* 그라데이션 높이 */
+				background: linear-gradient(
+					to bottom,
+					rgba(255, 255, 255, 1),
+					rgba(255, 255, 255, 0.7),
+					rgba(255, 255, 255, 0)
+				);
+				z-index: 1;
+			}
+			&::after {
+				content: "";
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				border-radius: 0px 0px 40px 40px;
+				width: 100%;
+				height: 80px; /* 그라데이션 높이 */
+				background: linear-gradient(to top, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+				z-index: 1;
+			}
 		`}
 `;
 const MainWrraper = styled.div`
@@ -77,12 +82,12 @@ const MainWrraper = styled.div`
 
 const Layout = ({ children }) => {
 	const location = useLocation();
-	const isCalendarPage = location.pathname === "/calendar";
+	const isCalendarPage = location.pathname === "/forecast";
 
 	return (
 		<AppContainer>
 			<Nav />
-			<MainContainer withGradient={!isCalendarPage}>
+			<MainContainer withGradient={isCalendarPage}>
 				<MainWrraper>{children}</MainWrraper>
 			</MainContainer>
 			<Header />

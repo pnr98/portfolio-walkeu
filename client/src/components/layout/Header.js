@@ -67,16 +67,18 @@ const Header = () => {
 			<Modal isOpen={modalOpen} onClose={closeModal} modalContent={modalContent} handleClick={handleLogout} />
 			{isLoggedIn ? (
 				<IconContainer>
-					<Button>
-						<RxHamburgerMenu className="icon-hamburger" />
-					</Button>
+					<Link to="/profile">
+						<Button>
+							<RxHamburgerMenu className="icon-hamburger" />
+						</Button>
+					</Link>
 					<Button onClick={openModal}>
 						<FiLogOut className="icon-logout" />
 					</Button>
 				</IconContainer>
 			) : (
 				<IconContainer>
-					<Link to="login">
+					<Link to="/login">
 						<Button>
 							<FiLogIn className="icon-login" />
 						</Button>
