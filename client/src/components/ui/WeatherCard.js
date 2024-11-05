@@ -102,7 +102,7 @@ const WeatherCard = ({ weatherData }) => {
 				</>
 			);
 		} else if (windSpeed) {
-			const { grade, text } = formatWindSpeed(Number(windSpeed.obsrValue));
+			const { grade, text } = formatWindSpeed(Number(windSpeed.obsrValue), 0);
 			return (
 				<>
 					<Title>
@@ -117,9 +117,9 @@ const WeatherCard = ({ weatherData }) => {
 				</>
 			);
 		} else if (precipitationForm) {
-			const form = formatPrepcipitationForm(Number(precipitationForm.obsrValue));
+			const form = formatPrepcipitationForm(precipitationForm.obsrValue);
 			const prcp = formatprecipitation(Number(precipitation.obsrValue), 1);
-			const nowSkyState = formatSkyState(Number(skyState[0]?.fcstValue));
+			const nowSkyState = formatSkyState(skyState[0]?.fcstValue);
 			const fcstTime = distinguishTime(precipitationForm.baseTime);
 
 			return (
@@ -137,7 +137,7 @@ const WeatherCard = ({ weatherData }) => {
 				</>
 			);
 		} else if (airQuality) {
-			const { grade, text } = formatAirQuality(Number(airQuality.khaiGrade));
+			const { grade, text } = formatAirQuality(airQuality.khaiGrade);
 			return (
 				<>
 					<Title>

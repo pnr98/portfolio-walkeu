@@ -7,6 +7,7 @@ import {
 	formatPrepcipitationForm,
 	formatSkyState,
 	formatTime,
+	formatWindSpeed,
 } from "../../utils/formatWeather";
 import { getImageByForm } from "../../utils/getImageByForm";
 
@@ -85,19 +86,23 @@ const WeatherChart = ({ shortTerm }) => {
 	// 하늘 상태
 	const skyState = shortTerm.skyState.map((item) => ({
 		time: item.fcstTime,
-		value: formatSkyState(Number(item.fcstValue)),
+		value: formatSkyState(item.fcstValue),
 	}));
 	// 강수량
 	const precipitation = shortTerm.precipitation.map((item) => ({
 		time: item.fcstTime,
-		value: formatprecipitation(item.fcstValue, 0),
+		value: formatprecipitation(item.fcstValue, 1),
 	}));
 	// 강수 형태
 	const prcpForm = shortTerm.precipitationForm.map((item) => ({
 		time: item.fcstTime,
-		value: formatPrepcipitationForm(Number(item.fcstValue)),
+		value: formatPrepcipitationForm(item.fcstValue),
 	}));
-
+	// 풍속
+	const windSpeed = shortTerm.windSpeed.map((item) => ({
+		time: item.fcstTime,
+		value: formatWindSpeed(item.fcstValue, 1),
+	}));
 	const [minY, maxY] = getDynamicYAxis(temperature);
 	return (
 		<TableConatiner>
@@ -158,6 +163,19 @@ const WeatherChart = ({ shortTerm }) => {
 							</div>
 						</th>
 						{humidity.map((item, index) => (
+							<td key={index}>
+								<div>{item.value}</div>
+							</td>
+						))}
+					</tr>
+					<tr className="windspeed">
+						<th>
+							<div className="category">
+								<div>풍속</div>
+								<div className="unit">(m/s)</div>
+							</div>
+						</th>
+						{windSpeed.map((item, index) => (
 							<td key={index}>
 								<div>{item.value}</div>
 							</td>

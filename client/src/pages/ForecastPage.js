@@ -10,7 +10,7 @@ const RegionName = styled.div`
 	font-size: 24px;
 `;
 const ForecastPage = () => {
-	const regionName = useSelector((state) => state.region.address);
+	const { address, position } = useSelector((state) => state.region);
 
 	const [modalContent, setModalContent] = useState("");
 
@@ -29,8 +29,8 @@ const ForecastPage = () => {
 	return (
 		<div>
 			<Search isOpen={modalOpen} onClose={closeModal} modalContent={modalContent} />
-			<RegionName>{regionName ? regionName : "위치 정보를 불러오는 중..."}</RegionName>
-			<Forecast />
+			<RegionName>{address ? address : "위치 정보를 불러오는 중..."}</RegionName>
+			{address && position && <Forecast address={address} position={position} />}
 			<Button onClick={handleClick}>눌러</Button>
 		</div>
 	);

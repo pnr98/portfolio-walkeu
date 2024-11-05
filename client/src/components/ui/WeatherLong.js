@@ -84,7 +84,7 @@ const WeatherLong = ({ longTerm }) => {
 	const prcpValues = getFcstValue(prcpProbability, todayDate);
 	const thermoMimValues = getFcstValue(thermoMinimum, todayDate);
 	const thermoMaxValues = getFcstValue(thermoMaximum, todayDate);
-	console.log(prcpValues);
+
 	return (
 		<TableContainer>
 			<Table>

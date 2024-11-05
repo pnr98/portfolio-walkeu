@@ -26,25 +26,25 @@ export const distinguishTime = (fcstTime) => {
 
 // 하늘 상태
 export const formatSkyState = (fcstValue) => {
-	if (fcstValue === 1) {
+	if (fcstValue === "1") {
 		return "맑음";
-	} else if (fcstValue === 2) {
+	} else if (fcstValue === "2") {
 		return "구름조금";
-	} else if (fcstValue === 3) {
+	} else if (fcstValue === "3") {
 		return "구름많음";
-	} else if (fcstValue === 4) {
+	} else if (fcstValue === "4") {
 		return "흐림";
 	}
 };
 // 강수 형태
 export const formatPrepcipitationForm = (fcstValue) => {
-	if (fcstValue === 0) {
+	if (fcstValue === "0" || fcstValue === "강수없음") {
 		return "없음";
-	} else if (fcstValue === 1 || fcstValue === 5) {
+	} else if (fcstValue === "1" || fcstValue === "5") {
 		return "비";
-	} else if (fcstValue === 2 || fcstValue === 6) {
+	} else if (fcstValue === "2" || fcstValue === "6") {
 		return "비/눈";
-	} else if (fcstValue === 3 || fcstValue === 7) {
+	} else if (fcstValue === "3" || fcstValue === "7") {
 		return "눈";
 	}
 	// else if (fcstValue === 5) {
@@ -58,6 +58,19 @@ export const formatPrepcipitationForm = (fcstValue) => {
 // 강수량 // 쓸일 없음
 export const formatprecipitation = (fcstValue, code) => {
 	if (code === 0) {
+		// 초단기실황
+		if (fcstValue === "강수없음" || fcstValue === 0) {
+			return "0";
+		} else if (fcstValue === "1mm 미만") {
+			return "1mm 미만";
+		} else if (fcstValue > 1 && fcstValue < 30) {
+			return `${fcstValue}mm`;
+		} else if (fcstValue === "30.0~50.0mm") {
+			return "30.0~50.0mm";
+		} else if (fcstValue === "50mm 이상") {
+			return "50mm 이상";
+		}
+	} else if (code === 1) {
 		// 초단기예보
 		if (fcstValue === "강수없음" || fcstValue === 0) {
 			return "0";
@@ -71,55 +84,52 @@ export const formatprecipitation = (fcstValue, code) => {
 			const numFcstValue = fcstValue.replace("mm", "");
 			return numFcstValue;
 		}
-	} else if (code === 1) {
-		// 초단기실황
-		if (fcstValue === "강수없음" || fcstValue === 0) {
-			return "0";
-		} else if (fcstValue === "1mm 미만") {
-			return "1mm 미만";
-		} else if (fcstValue > 1 && fcstValue < 30) {
-			return `${fcstValue}mm`;
-		} else if (fcstValue === "30.0~50.0mm") {
-			return "30.0~50.0mm";
-		} else if (fcstValue === "50mm 이상") {
-			return "50mm 이상";
-		}
 	}
 };
 // 초단기실황
 export const formatPrepcipitationFormForLong = (fcstValue) => {
-	if (fcstValue === 0) {
+	if (fcstValue === "0") {
 		return "없음";
-	} else if (fcstValue === 1) {
+	} else if (fcstValue === "1") {
 		return "비";
-	} else if (fcstValue === 2) {
+	} else if (fcstValue === "2") {
 		return "비/눈";
-	} else if (fcstValue === 3) {
+	} else if (fcstValue === "3") {
 		return "눈";
-	} else if (fcstValue === 4) {
+	} else if (fcstValue === "4") {
 		return "소나기";
 	}
 };
 // 풍속
-export const formatWindSpeed = (fcstValue) => {
-	let grade;
-	let text;
-
-	if (fcstValue < 4) {
-		text = "약함";
-		grade = 1;
-	} else if (fcstValue >= 4 && fcstValue < 9) {
-		text = "약간 강함";
-		grade = 2;
-	} else if (fcstValue >= 9 && fcstValue < 14) {
-		text = "강함";
-		grade = 3;
-	} else if (fcstValue >= 14) {
-		text = "매우 강함";
-		grade = 4;
+export const formatWindSpeed = (fcstValue, code) => {
+	if (code === 0) {
+		let grade;
+		let text;
+		if (fcstValue < 4) {
+			text = "약함";
+			grade = 1;
+		} else if (fcstValue >= 4 && fcstValue < 9) {
+			text = "약간 강함";
+			grade = 2;
+		} else if (fcstValue >= 9 && fcstValue < 14) {
+			text = "강함";
+			grade = 3;
+		} else if (fcstValue >= 14) {
+			text = "매우 강함";
+			grade = 4;
+		}
+		return { grade, text };
+	} else if (code === 1) {
+		if (fcstValue < 4) {
+			return `${fcstValue} 약함`;
+		} else if (fcstValue >= 4 && fcstValue < 9) {
+			return `${fcstValue} 약간 강함`;
+		} else if (fcstValue >= 9 && fcstValue < 14) {
+			return `${fcstValue} 강함`;
+		} else if (fcstValue >= 14) {
+			return `${fcstValue} 매우 강함`;
+		}
 	}
-
-	return { grade, text };
 };
 // 기온
 export const formatThermo = (fcstValue) => {
@@ -153,16 +163,16 @@ export const formatAirQuality = (fcstValue) => {
 	//khaiGrade
 	// }
 
-	if (fcstValue === 1) {
+	if (fcstValue === "1") {
 		text = "좋음";
 		grade = 1;
-	} else if (fcstValue === 2) {
+	} else if (fcstValue === "2") {
 		text = "보통";
 		grade = 2;
-	} else if (fcstValue === 3) {
+	} else if (fcstValue === "3") {
 		text = "나쁨";
 		grade = 3;
-	} else if (fcstValue === 4) {
+	} else if (fcstValue === "4") {
 		text = "매우 나쁨";
 		grade = 4;
 	}
@@ -170,6 +180,10 @@ export const formatAirQuality = (fcstValue) => {
 };
 export const recommandWalk = (size, type, thermo, weather) => {
 	let score = 0;
+	// 비만견, 단두종, 6개월미만의 자견, 노령견 +1
+	// type = 추위에 강한 견종(북방계, 두꺼운 이중모) -1
+	// 북방견(1) -1점 | 노령견 or 6개월미만의 자견(2) +1점
+	// 비만견(1) | 단두종(2) --> +1점
 
 	if (thermo <= 7) {
 		// 기온이 적은데 비가오면,
@@ -229,7 +243,7 @@ export const recommandWalk = (size, type, thermo, weather) => {
 		} else if (thermo < -9) {
 			score += 5;
 		}
-	} else if (size === "big") {
+	} else if (size === "large") {
 		if (thermo >= 29) {
 			score += 5;
 		} else if (thermo >= 24 && thermo < 29) {
@@ -256,10 +270,10 @@ export const recommandWalk = (size, type, thermo, weather) => {
 	} else if (score === 2) {
 		return "산책하기 괜찮은 날이예요.";
 	} else if (score === 3) {
-		return "품종에 따라 주의가 필요 (방한용품)";
+		return "품종에 따라 주의가 필요";
 	} else if (score === 4) {
-		return "산책하기에는 상당히 쌀쌀해요 (방한용품)";
+		return "산책하기에는 상당히 위험해요";
 	} else if (score >= 5) {
-		return "경고! 산책하기 너무 추움 (방한용품)";
+		return "경고! 산책하기 너무 위험해요";
 	}
 };
