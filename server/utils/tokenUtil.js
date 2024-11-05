@@ -13,9 +13,12 @@ const generateRefreshToken = () => {
 };
 const verifyToken = (token) => {
   try {
-    return jwt.verify(token, process.env.JWT_SECRET); // 만료되면 에러 발생
+    return jwt.verify(token, process.env.JWT_SECRET);
   } catch (error) {
-    return null; // 만료된 토큰일 경우 null 반환
+    if (error.name === "TokenExpiredError") {
+      throw new Error("토큰이 만료되었습니다.");
+    }
+    throw new Error("유효하지 않은 토큰입니다.");
   }
 };
 

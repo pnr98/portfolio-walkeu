@@ -96,36 +96,31 @@ exports.logout = async (req, res) => {
 };
 
 // checkAuth / GET
+//
 exports.checkAuth = async (req, res) => {
-  const accessToken = req.headers.authorization?.split(" ")[1];
-  if (!accessToken) {
-    console.log("4"); // 이게 실행됨
-    return res.status(401).json({ message: "액세스 토큰이 없습니다" });
-  }
   try {
-    const decoded = verifyToken(accessToken); // 유저 아이디 정보와 만료 정보
-    if (!decoded) {
-      console.log("액세스 토큰 만료됨"); // 이게 실행됨
-      return res
-        .status(401)
-        .json({ message: "액세스 토큰이 유효하지 않습니다" });
-    }
-    const user = await User.getUserById(decoded.userId); // 유저 전체 정보임.
+    const userId = req.userId;
+    const user = await User.getUserById(userId);
     // 해당 유저가 존재하지 않을 경우
     if (!user) {
       return res.status(404).json({ message: "유저를 찾을 수 없습니다" });
     }
-    res.status(200).json({
+    console.log("checkAuth");
+    return res.status(200).json({
       user: {
         email: user.email,
         nickname: user.nickname,
         role: user.role,
       },
     });
-    console.log("checkAuth");
   } catch (error) {
-    res.status(500).json({ message: "사용자 검증 실패" });
-    console.log("에러");
+    if (
+      error.message === "토큰이 만료되었습니다." ||
+      error.message === "유효하지 않은 토큰입니다."
+    ) {
+      return res.status(401).json({ message: error.message });
+    }
+    return res.status(500).json({ message: "서버: 사용자 검증 실패" });
   }
 };
 // 리프레시 토큰으로 새 액세스 토큰 요청
@@ -135,7 +130,7 @@ exports.refreshToken = async (req, res) => {
     : null;
   // 토큰이 없는 경우
   if (!refreshToken) {
-    console.log("1");
+    console.log("리프레시 토큰이 없습니다");
     return res.status(403).json({ message: "리프레시 토큰이 없습니다" });
   }
   try {

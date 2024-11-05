@@ -3,11 +3,13 @@ const { verifyToken } = require("../utils/tokenUtil");
 
 // 산책 기록 불러오기
 exports.fetchWalk = async (req, res) => {
-  const accessToken = req.headers.authorization?.split(" ")[1];
-
   try {
-    const userId = verifyToken(accessToken).userId;
+    const userId = req.userId;
     const { date } = req.query; // 2024-10
+
+    if (!date) {
+      return res.status(400).json({ message: "날짜가 필요합니다." });
+    }
     const dateList = await Walk.getWalkRecordById({ userId, date });
     // console.log("dateList", dateList); // { walkDate: 2024-09-10T15:00:00.000Z },
     // console.log(convertFormat(dateList)); // { walkDate: '2024-09-10' },
@@ -21,11 +23,13 @@ exports.fetchWalk = async (req, res) => {
 };
 // 산책 기록 추가
 exports.addWalk = async (req, res) => {
-  const accessToken = req.headers.authorization?.split(" ")[1];
-
   try {
-    const userId = verifyToken(accessToken).userId;
+    const userId = req.userId;
     const { date } = req.body;
+    if (!date) {
+      return res.status(400).json({ message: "날짜가 필요합니다." });
+    }
+
     const existingDate = await Walk.fideOne({ userId, date });
     // 기존 산책 기록이 있는 경우
     if (existingDate?.length > 0) {
@@ -43,12 +47,13 @@ exports.addWalk = async (req, res) => {
 };
 // 산책 기록 삭제
 exports.deleteWalk = async (req, res) => {
-  const accessToken = req.headers.authorization?.split(" ")[1];
-
   try {
-    const userId = verifyToken(accessToken).userId;
+    const userId = req.userId;
     const { date } = req.params; // URL 파라미터에서 날짜 받기
-    // console.log(date);
+    if (!date) {
+      return res.status(400).json({ message: "날짜가 필요합니다." });
+    }
+
     const deletedDate = await Walk.deleteWalkDate({ userId, date });
     if (!deletedDate) {
       return res.status(404).json({ message: "산책 기록이 없습니다." });
