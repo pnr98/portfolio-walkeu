@@ -23,7 +23,7 @@ https://github.com/user-attachments/assets/482714a9-a644-4f66-b035-c0ba91900151
       <br> 닉네임, 적절한 이메일, 비밀번호를 기입한 후 회원가입할 수 있음.
     </td>
     <td>
-     <img alt="register" style="width: 300px;" src="https://github.com/user-attachments/assets/e22ad8ed-deb0-4d1e-9a0a-ef9dfdd1a54b">
+     <img alt="register" style="width: 500px;" src="https://github.com/user-attachments/assets/e22ad8ed-deb0-4d1e-9a0a-ef9dfdd1a54b">
     </td>
   </tr>
 <!--   로그인 -->
@@ -33,7 +33,7 @@ https://github.com/user-attachments/assets/482714a9-a644-4f66-b035-c0ba91900151
       <br> 올바른 이메일, 비밀번호를 기입한 후 로그인할 수 있음.
     </td>
     <td >
-        <img alt="login" style="width: 300px;" src="https://github.com/user-attachments/assets/58c06a34-210a-47c3-961a-2304b8a93c0d">
+        <img alt="login" style="width: 500px;" src="https://github.com/user-attachments/assets/58c06a34-210a-47c3-961a-2304b8a93c0d">
     </td>
   </tr>
 <!--   날씨 -->
@@ -43,7 +43,7 @@ https://github.com/user-attachments/assets/482714a9-a644-4f66-b035-c0ba91900151
       <br> 사용자의 현재 위치를 기반으로 초단기실황(실시간), 초단기예보(6시간), 단기예보(1~3)의 날씨 정보를 불러옴.
     </td>
     <td >
-        <img alt="forecast" style="width: 300px;" src="https://github.com/user-attachments/assets/5a089f41-2e29-4e39-ad41-0bb715469d0a">
+        <img alt="forecast" style="width: 500px;" src="https://github.com/user-attachments/assets/5a089f41-2e29-4e39-ad41-0bb715469d0a">
     </td>
   </tr>
   <!--   산책일지 -->
@@ -53,7 +53,7 @@ https://github.com/user-attachments/assets/482714a9-a644-4f66-b035-c0ba91900151
       <br> 사용자가 산책한 날짜를 조회, 생성, 삭제를 할 수 있음.
     </td>
     <td >
-        <img alt="calender" style="width: 300px;" src="https://github.com/user-attachments/assets/a1412824-eb81-49e7-9966-b166c9d8cb80">
+        <img alt="calender" style="width: 500px;" src="https://github.com/user-attachments/assets/a1412824-eb81-49e7-9966-b166c9d8cb80">
     </td>
   </tr>
 </table>
