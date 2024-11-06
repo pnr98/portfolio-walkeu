@@ -1,5 +1,3 @@
-
-https://github.com/user-attachments/assets/482714a9-a644-4f66-b035-c0ba91900151
 <img src="https://capsule-render.vercel.app/api?type=Waving&color=auto&height=250&section=header&text=Walkeu%20Walkeu%20🐶&fontSize=60" />
 
 ## 📃 Introduction
