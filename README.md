@@ -53,11 +53,10 @@ https://github.com/user-attachments/assets/482714a9-a644-4f66-b035-c0ba91900151
       <br> 사용자가 산책한 날짜를 조회, 생성, 삭제를 할 수 있음.
     </td>
     <td >
-        <img alt="calender" style="width: 300px;" src="!https://github.com/user-attachments/assets/e0cfec28-e314-4e06-912a-0aabc0b17d28">
+        <img alt="calender" style="width: 300px;" src="https://github.com/user-attachments/assets/a1412824-eb81-49e7-9966-b166c9d8cb80">
     </td>
   </tr>
 </table>
-
 
 </br>
 
